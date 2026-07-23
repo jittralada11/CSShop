@@ -1,0 +1,254 @@
+<div class="library-container min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary-50/30">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-5 pointer-events-none">
+    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ef4444%22 fill-opacity=%220.1%22%3E%3Ccircle cx=%2230%22 cy=%2230%22 r=%224%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+  </div>
+
+  <div class="relative z-10 container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="header text-center mb-12">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-3xl mb-6 shadow-strong">
+        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        </svg>
+      </div>
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent mb-3">ไลบรารีเกมของฉัน</h1>
+      <p class="text-xl text-neutral-600 font-medium">เกมทั้งหมดที่คุณได้ซื้อไว้</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-500 text-red-700 px-6 py-4 rounded-xl mb-8 shadow-medium animate-shake">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <!-- Library Statistics -->
+    <div class="stats-grid grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+      <div class="stat-card group bg-white/80 backdrop-blur-xl p-8 rounded-3xl border border-white/50 shadow-medium hover:shadow-strong transition-all duration-300 hover:-translate-y-1">
+        <div class="flex items-center">
+          <div class="bg-gradient-to-br from-primary-500 to-primary-600 p-4 rounded-2xl mr-6 group-hover:scale-110 transition-transform duration-300 shadow-medium">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm text-neutral-600 font-medium mb-1">เกมทั้งหมด</p>
+            <p class="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">{{ purchasedGames.length }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card group bg-white/80 backdrop-blur-xl p-8 rounded-3xl border border-white/50 shadow-medium hover:shadow-strong transition-all duration-300 hover:-translate-y-1">
+        <div class="flex items-center">
+          <div class="bg-gradient-to-br from-secondary-500 to-secondary-600 p-4 rounded-2xl mr-6 group-hover:scale-110 transition-transform duration-300 shadow-medium">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm text-neutral-600 font-medium mb-1">มูลค่ารวม</p>
+            <p class="text-3xl font-bold bg-gradient-to-r from-secondary-600 to-primary-600 bg-clip-text text-transparent">{{ formatPrice(getTotalValue()) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card group bg-white/80 backdrop-blur-xl p-8 rounded-3xl border border-white/50 shadow-medium hover:shadow-strong transition-all duration-300 hover:-translate-y-1">
+        <div class="flex items-center">
+          <div class="bg-gradient-to-br from-accent-500 to-accent-600 p-4 rounded-2xl mr-6 group-hover:scale-110 transition-transform duration-300 shadow-medium">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm text-neutral-600 font-medium mb-1">หมวดหมู่</p>
+            <p class="text-3xl font-bold bg-gradient-to-r from-accent-600 to-primary-600 bg-clip-text text-transparent">{{ categories.length }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="search-filters bg-white/80 backdrop-blur-xl rounded-3xl p-8 mb-12 shadow-medium border border-white/50">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <!-- Search -->
+        <div class="search-box">
+          <label class="block text-sm font-semibold text-neutral-700 mb-3">ค้นหาเกม</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+            <input
+              type="text"
+              [(ngModel)]="searchTerm"
+              (input)="applyFilters()"
+              placeholder="ชื่อเกม..."
+              class="w-full pl-12 pr-4 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-neutral-700 placeholder-neutral-400"
+            >
+          </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="category-filter">
+          <label class="block text-sm font-semibold text-neutral-700 mb-3">หมวดหมู่</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              </svg>
+            </div>
+            <select
+              [(ngModel)]="selectedCategory"
+              (change)="applyFilters()"
+              class="w-full pl-12 pr-10 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-neutral-700 appearance-none cursor-pointer"
+            >
+              <option value="">ทุกหมวดหมู่</option>
+              <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sort -->
+        <div class="sort-filter">
+          <label class="block text-sm font-semibold text-neutral-700 mb-3">เรียงตาม</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
+              </svg>
+            </div>
+            <select
+              [(ngModel)]="sortBy"
+              (change)="applyFilters()"
+              class="w-full pl-12 pr-10 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-neutral-700 appearance-none cursor-pointer"
+            >
+              <option value="name">ชื่อ A-Z</option>
+              <option value="price">ราคา (สูง-ต่ำ)</option>
+              <option value="release_date">วันที่วางจำหน่าย</option>
+              <option value="purchase_date">วันที่ซื้อ</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+              <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clear Filters -->
+        <div class="clear-filters flex items-end">
+          <button
+            (click)="clearFilters()"
+            class="w-full px-6 py-3 bg-gradient-to-r from-neutral-500 to-neutral-600 text-white rounded-2xl hover:from-neutral-600 hover:to-neutral-700 transition-all duration-200 font-semibold shadow-medium hover:shadow-strong transform hover:-translate-y-0.5"
+          >
+            ล้างตัวกรอง
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state text-center py-16 animate-pulse">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl mb-6 animate-spin">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+      </div>
+      <p class="text-xl text-neutral-600 font-medium">กำลังโหลดเกม...</p>
+    </div>
+
+    <!-- Games Grid -->
+    <div *ngIf="!isLoading && filteredGames.length > 0" class="games-grid">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div *ngFor="let game of filteredGames; trackBy: trackByGameId" class="game-card group bg-white/80 backdrop-blur-xl rounded-3xl shadow-medium hover:shadow-strong overflow-hidden transition-all duration-500 hover:-translate-y-2 border border-white/50 animate-fade-in">
+          <!-- Game Image -->
+          <div class="game-image relative overflow-hidden">
+            <img [src]="game.image" [alt]="game.name" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute top-4 right-4">
+              <span *ngIf="game.salesRank && game.salesRank <= 5" class="bg-gradient-to-r from-accent-500 to-accent-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-medium">
+                Best Seller
+              </span>
+            </div>
+            <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div class="bg-white/90 backdrop-blur-sm rounded-xl px-3 py-1">
+                <span class="text-sm font-semibold text-neutral-700">{{ game.category.name }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Info -->
+          <div class="game-info p-6">
+            <h3 class="font-bold text-xl text-neutral-800 mb-3 line-clamp-1 group-hover:text-primary-600 transition-colors duration-200">{{ game.name }}</h3>
+            <p class="text-neutral-600 text-sm mb-4 line-clamp-2 leading-relaxed">{{ game.description }}</p>
+            
+            <div class="game-meta mb-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">{{ formatPrice(game.price) }}</span>
+              </div>
+              <div class="text-xs text-neutral-500">
+                วางจำหน่าย: {{ formatDate(game.releaseDate.toISOString()) }}
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons flex gap-3">
+              <button
+                (click)="downloadGame(game.id)"
+                class="flex-1 bg-gradient-to-r from-secondary-500 to-secondary-600 text-white px-4 py-3 rounded-2xl hover:from-secondary-600 hover:to-secondary-700 transition-all duration-200 text-sm font-semibold shadow-medium hover:shadow-strong transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                ดาวน์โหลด
+              </button>
+              <button
+                (click)="viewGameDetails(game.id)"
+                class="flex-1 bg-gradient-to-r from-primary-500 to-primary-600 text-white px-4 py-3 rounded-2xl hover:from-primary-600 hover:to-primary-700 transition-all duration-200 text-sm font-semibold shadow-medium hover:shadow-strong transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                รายละเอียด
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && filteredGames.length === 0" class="empty-state text-center py-16">
+      <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-3xl mb-8">
+        <svg class="w-12 h-12 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-bold text-neutral-800 mb-4">
+        {{ purchasedGames.length === 0 ? 'ยังไม่มีเกมในไลบรารี' : 'ไม่พบเกมที่ตรงกับการค้นหา' }}
+      </h3>
+      <p class="text-neutral-600 mb-8 text-lg max-w-md mx-auto leading-relaxed">
+        {{ purchasedGames.length === 0 ? 'เริ่มต้นสร้างคอลเลกชันเกมของคุณได้เลย!' : 'ลองเปลี่ยนเงื่อนไขการค้นหาหรือตัวกรอง' }}
+      </p>
+      <button
+        (click)="navigateToShop()"
+        class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-4 rounded-2xl hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 font-semibold shadow-strong hover:shadow-xl transform hover:-translate-y-1 inline-flex items-center gap-3"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        {{ purchasedGames.length === 0 ? 'เริ่มช้อปปิ้ง' : 'กลับไปช้อปปิ้ง' }}
+      </button>
+    </div>
+  </div>
+</div>

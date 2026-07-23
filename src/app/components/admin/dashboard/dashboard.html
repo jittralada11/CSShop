@@ -1,0 +1,656 @@
+<!-- Dashboard Content -->
+<div class="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100">
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Tab Navigation -->
+    <div
+      class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-soft border border-white/50 p-2 mb-8"
+    >
+      <div class="flex space-x-1">
+        <button
+          (click)="setActiveTab('overview')"
+          class="flex-1 flex items-center justify-center px-6 py-3 rounded-2xl font-medium transition-all duration-300"
+          [class]="
+            activeTab === 'overview'
+              ? 'bg-gradient-to-r from-primary-500 to-secondary-500 text-white shadow-medium'
+              : 'text-neutral-600 hover:text-primary-600 hover:bg-primary-50'
+          "
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+            ></path>
+          </svg>
+          ภาพรวม
+        </button>
+        <button
+          (click)="setActiveTab('games')"
+          class="flex-1 flex items-center justify-center px-6 py-3 rounded-2xl font-medium transition-all duration-300"
+          [class]="
+            activeTab === 'games'
+              ? 'bg-gradient-to-r from-primary-500 to-secondary-500 text-white shadow-medium'
+              : 'text-neutral-600 hover:text-primary-600 hover:bg-primary-50'
+          "
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
+            ></path>
+          </svg>
+          จัดการเกม
+        </button>
+        <button
+          (click)="setActiveTab('users')"
+          class="flex-1 flex items-center justify-center px-6 py-3 rounded-2xl font-medium transition-all duration-300"
+          [class]="
+            activeTab === 'users'
+              ? 'bg-gradient-to-r from-primary-500 to-secondary-500 text-white shadow-medium'
+              : 'text-neutral-600 hover:text-primary-600 hover:bg-primary-50'
+          "
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+            ></path>
+          </svg>
+          จัดการผู้ใช้
+        </button>
+        <button
+          (click)="setActiveTab('promotions')"
+          class="flex-1 flex items-center justify-center px-6 py-3 rounded-2xl font-medium transition-all duration-300"
+          [class]="
+            activeTab === 'promotions'
+              ? 'bg-gradient-to-r from-primary-500 to-secondary-500 text-white shadow-medium'
+              : 'text-neutral-600 hover:text-primary-600 hover:bg-primary-50'
+          "
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+            ></path>
+          </svg>
+          โปรโมชั่น
+        </button>
+      </div>
+    </div>
+
+    <!-- Games Management Tab -->
+    <div *ngIf="activeTab === 'games'">
+      <!-- Header with Add Button -->
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h2 class="text-3xl font-display font-bold text-neutral-800 mb-2">จัดการเกม</h2>
+          <p class="text-neutral-600">เพิ่ม แก้ไข และจัดการเกมในร้านค้า</p>
+        </div>
+        <button
+          (click)="openAddGameModal()"
+          class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 shadow-medium hover:shadow-strong flex items-center space-x-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            ></path>
+          </svg>
+          <span>เพิ่มเกมใหม่</span>
+        </button>
+      </div>
+
+      <!-- Games Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Game Card Template -->
+        <div
+          *ngFor="let game of games"
+          class="group bg-white/80 backdrop-blur-xl rounded-3xl shadow-medium hover:shadow-strong overflow-hidden transition-all duration-500 hover:-translate-y-2 border border-white/50"
+        >
+          <!-- Game Image -->
+          <div class="relative overflow-hidden">
+            <img
+              [src]="game.image || '/assets/images/default-game.jpg'"
+              [alt]="game.name"
+              class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+
+            <!-- Action Badge -->
+            <div class="absolute top-4 left-4">
+              <span
+                class="bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-medium"
+              >
+                {{ game.category.name }}
+              </span>
+            </div>
+
+            <!-- Ranking Badge -->
+            <div class="absolute top-4 right-4">
+              <div class="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-medium">
+                <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Info -->
+          <div class="p-6">
+            <h3
+              class="font-display font-bold text-xl text-neutral-800 mb-2 line-clamp-1 group-hover:text-primary-600 transition-colors duration-300"
+            >
+              {{ game.name }}
+            </h3>
+            <p class="text-neutral-600 text-sm mb-4 line-clamp-2 leading-relaxed">
+              {{ game.description }}
+            </p>
+
+            <!-- Price -->
+            <div class="flex items-center justify-between mb-4">
+              <div class="text-2xl font-bold text-primary-600">฿ {{ formatPrice(game.price) }}</div>
+            </div>
+
+            <!-- Date -->
+            <div class="flex items-center text-neutral-500 text-sm mb-4">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+              {{ formatDate(game.releaseDate) }}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex space-x-2">
+              <button
+                (click)="editGame(game)"
+                class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-2 px-4 rounded-xl font-medium transition-all duration-300 shadow-medium hover:shadow-strong flex items-center justify-center space-x-2"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  ></path>
+                </svg>
+                <span>แก้ไข</span>
+              </button>
+              <button
+                (click)="deleteGame(game.id)"
+                class="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-2 px-4 rounded-xl font-medium transition-all duration-300 shadow-medium hover:shadow-strong flex items-center justify-center space-x-2"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  ></path>
+                </svg>
+                <span>ลบ</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="games.length === 0" class="col-span-full text-center py-16">
+          <div
+            class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-neutral-200 to-neutral-300 rounded-2xl mb-6"
+          >
+            <svg
+              class="w-8 h-8 text-neutral-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-600 mb-2">ยังไม่มีเกมในระบบ</h3>
+          <p class="text-neutral-500 mb-6">เริ่มต้นด้วยการเพิ่มเกมแรกของคุณ</p>
+          <button
+            (click)="openAddGameModal()"
+            class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 shadow-medium hover:shadow-strong"
+          >
+            เพิ่มเกมใหม่
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overview Tab -->
+    <div *ngIf="activeTab === 'overview'">
+      <div class="text-center py-16">
+        <h2 class="text-3xl font-display font-bold text-neutral-800 mb-4">ภาพรวมระบบ</h2>
+        <p class="text-neutral-600">สถิติและข้อมูลสำคัญของร้านค้า</p>
+      </div>
+    </div>
+
+    <!-- Users Tab
+    <div *ngIf="activeTab === 'users'">
+      <div class="text-center py-16">
+        <h2 class="text-3xl font-display font-bold text-neutral-800 mb-4">จัดการผู้ใช้</h2>
+        <p class="text-neutral-600">จัดการบัญชีผู้ใช้และสิทธิ์การเข้าถึง</p>
+      </div>
+    </div> -->
+
+    <!-- Promotions Tab -->
+    <div *ngIf="activeTab === 'promotions'">
+      <div class="text-center py-16">
+        <h2 class="text-3xl font-display font-bold text-neutral-800 mb-4">จัดการโปรโมชั่น</h2>
+        <p class="text-neutral-600">สร้างและจัดการโปรโมชั่นสำหรับลูกค้า</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Edit/Add Modal -->
+  <div
+    *ngIf="isEditingGame"
+    class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+  >
+    <div class="bg-white rounded-3xl shadow-strong max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <!-- Modal Header -->
+      <div class="p-6 border-b border-neutral-200">
+        <div class="flex items-center justify-between">
+          <h3 class="text-2xl font-display font-bold text-neutral-800">
+            {{ selectedGame ? 'แก้ไขเกม' : 'เพิ่มเกมใหม่' }}
+          </h3>
+          <button
+            (click)="closeGameModal()"
+            class="text-neutral-400 hover:text-neutral-600 transition-colors"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6">
+        <form (ngSubmit)="saveGame()" #gameFormRef="ngForm">
+          <!-- Game Name -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-neutral-700 mb-2">ชื่อเกม</label>
+            <input
+              type="text"
+              [(ngModel)]="gameForm.name"
+              name="name"
+              required
+              class="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+              placeholder="กรอกชื่อเกม"
+            />
+          </div>
+
+          <!-- Game Price -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-neutral-700 mb-2">ราคา (บาท)</label>
+            <input
+              type="number"
+              [(ngModel)]="gameForm.price"
+              name="price"
+              required
+              min="0"
+              class="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+              placeholder="กรอกราคาเกม"
+            />
+          </div>
+
+          <!-- Game Category -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-neutral-700 mb-2">หมวดหมู่</label>
+            <select
+              [(ngModel)]="gameForm.categoryId"
+              name="categoryId"
+              required
+              class="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+            >
+              <option value="">เลือกหมวดหมู่</option>
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Game Description -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-neutral-700 mb-2">คำอธิบาย</label>
+            <textarea
+              [(ngModel)]="gameForm.description"
+              name="description"
+              required
+              rows="4"
+              class="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 resize-none"
+              placeholder="กรอกคำอธิบายเกม"
+            ></textarea>
+          </div>
+
+          <!-- Game Image Upload -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-neutral-700 mb-2">รูปภาพเกม</label>
+            <div class="relative">
+              <input type="file" #fileInput (change)="onImageFileSelected($event)" 
+                accept="image/*" class="hidden" id="imageUpload">
+              <div class="w-full border-2 border-dashed border-neutral-300 rounded-xl p-6 text-center hover:border-primary-500 transition-all duration-300 cursor-pointer"
+                (click)="fileInput.click()" 
+                [class.border-primary-500]="selectedImageFile"
+                [class.bg-primary-50]="selectedImageFile">
+                <div *ngIf="!selectedImageFile && !imagePreview" class="py-4">
+                  <svg class="w-12 h-12 text-neutral-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                  </svg>
+                  <p class="text-neutral-600 font-medium mb-2">คลิกเพื่อเลือกรูปภาพ</p>
+                  <p class="text-neutral-500 text-sm">รองรับไฟล์ JPG, PNG, GIF (ขนาดไม่เกิน 5MB)</p>
+                </div>
+                <div *ngIf="selectedImageFile" class="py-2">
+                  <svg class="w-8 h-8 text-green-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <p class="text-green-600 font-medium">{{ selectedImageFile.name }}</p>
+                  <p class="text-neutral-500 text-sm">{{ formatFileSize(selectedImageFile.size) }}</p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="selectedImageFile" class="mt-2 flex justify-end">
+              <button type="button" (click)="removeSelectedImage()" 
+                class="text-red-500 hover:text-red-700 text-sm font-medium transition-colors duration-300">
+                ลบรูปภาพ
+              </button>
+            </div>
+          </div>
+
+          <!-- Image Preview -->
+          <div *ngIf="imagePreview" class="mb-6">
+            <label class="block text-sm font-medium text-neutral-700 mb-2">ตัวอย่างรูปภาพ</label>
+            <div class="w-full h-48 bg-neutral-100 rounded-xl overflow-hidden relative">
+              <img [src]="imagePreview" [alt]="gameForm.name || 'ตัวอย่างรูปภาพ'" 
+                class="w-full h-full object-cover">
+              <div class="absolute top-2 right-2">
+                <button type="button" (click)="removeSelectedImage()" 
+                  class="bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-medium transition-all duration-300">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error/Success Messages -->
+          <div *ngIf="errorMessage" class="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+            <p class="text-red-600 text-sm">{{ errorMessage }}</p>
+          </div>
+
+          <div
+            *ngIf="successMessage"
+            class="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl"
+          >
+            <p class="text-green-600 text-sm">{{ successMessage }}</p>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="flex space-x-4 pt-4">
+            <button
+              type="button"
+              (click)="closeGameModal()"
+              class="flex-1 px-6 py-3 border border-neutral-300 text-neutral-700 rounded-xl font-medium hover:bg-neutral-50 transition-all duration-300"
+            >
+              ยกเลิก
+            </button>
+            <button
+              type="submit"
+              [disabled]="!gameFormRef.form.valid || isLoading"
+              class="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-medium hover:shadow-strong disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {{ isLoading ? 'กำลังบันทึก...' : selectedGame ? 'บันทึกการแก้ไข' : 'เพิ่มเกม' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Tab -->
+  <div *ngIf="activeTab === 'users'" class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header Section -->
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h2 class="text-3xl font-display font-bold text-neutral-800 mb-2">จัดการผู้ใช้</h2>
+          <p class="text-neutral-600">จัดการบัญชีผู้ใช้และสิทธิ์การเข้าถึง</p>
+        </div>
+      </div>
+
+      <!-- Users Grid -->
+      <!-- 🔹 ส่วนของแอดมิน -->
+      <div class="mb-12 px-4 sm:px-8">
+        <!-- หัวข้อ -->
+        <h3
+          class="text-2xl font-display font-bold text-neutral-800 mb-6 border-b border-neutral-200 pb-2"
+        >
+          ผู้ดูแลระบบ (Admin)
+        </h3>
+
+        <!-- รายการผู้ดูแลระบบ -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <ng-container *ngFor="let user of users">
+            <div
+              *ngIf="user.role === 'admin'"
+              class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-medium hover:shadow-strong p-6 text-center transition-all duration-300 border border-white/50"
+            >
+              <!-- รูปโปรไฟล์ -->
+              <div class="w-24 h-24 mx-auto mb-4 bg-neutral-200 rounded-full overflow-hidden">
+                <img
+                  [src]="user.image || '/assets/images/default-user.jpg'"
+                  alt="User Image"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <!-- ชื่อ / อีเมล -->
+              <h3 class="text-xl font-bold text-neutral-800">{{ user.username }}</h3>
+              <p class="text-neutral-500 text-sm mb-4">{{ user.email }}</p>
+
+              <!-- ข้อมูล -->
+              <div class="text-left space-y-2 mb-6">
+                <div class="flex justify-between text-neutral-700">
+                  <span>กระเป๋าเงิน :</span>
+                  <span>฿ {{ formatPrice(user.walletBalance || 0) }}</span>
+                </div>
+                <div class="flex justify-between text-neutral-700">
+                  <span>สมัครเมื่อ :</span>
+                  <span>{{ formatDate(user.createdAt!) }}</span>
+                </div>
+              </div>
+
+              <!-- ปุ่ม -->
+              <button
+                (click)="openTransactionModal(user)"
+                class="w-full bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-300"
+              >
+                รายละเอียด
+              </button>
+            </div>
+          </ng-container>
+
+          <!-- ถ้าไม่มีผู้ดูแลระบบ -->
+          <div *ngIf="!hasAdminUsers()" class="col-span-full text-center text-neutral-500 py-8">
+            <p>ยังไม่มีผู้ดูแลระบบ</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🔹 ส่วนของผู้ใช้ -->
+      <div class="mb-12 px-4 sm:px-8">
+        <!-- หัวข้อ -->
+        <h3
+          class="text-2xl font-display font-bold text-neutral-800 mb-6 border-b border-neutral-200 pb-2"
+        >
+          ผู้ใช้ (User)
+        </h3>
+
+        <!-- รายการผู้ใช้ -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <ng-container *ngFor="let user of users">
+            <div
+              *ngIf="user.role === 'user'"
+              class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-medium hover:shadow-strong p-6 text-center transition-all duration-300 border border-white/50"
+            >
+              <!-- รูปโปรไฟล์ -->
+              <div class="w-24 h-24 mx-auto mb-4 bg-neutral-200 rounded-full overflow-hidden">
+                <img
+                  [src]="user.image || '/assets/images/default-user.jpg'"
+                  alt="User Image"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <!-- ชื่อ / อีเมล -->
+              <h3 class="text-xl font-bold text-neutral-800">{{ user.username }}</h3>
+              <p class="text-neutral-500 text-sm mb-4">{{ user.email }}</p>
+
+              <!-- ข้อมูล -->
+              <div class="text-left space-y-2 mb-6">
+                <div class="flex justify-between text-neutral-700">
+                  <span>กระเป๋าเงิน :</span>
+                  <span>฿ {{ formatPrice(user.walletBalance || 0) }}</span>
+                </div>
+                <div class="flex justify-between text-neutral-700">
+                  <span>สมัครเมื่อ :</span>
+                  <span>{{ formatDate(user.createdAt!) }}</span>
+                </div>
+              </div>
+
+              <!-- ปุ่ม -->
+              <button
+                (click)="openTransactionModal(user)"
+                class="w-full bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-300"
+              >
+                รายละเอียด
+              </button>
+            </div>
+          </ng-container>
+
+          <!-- ถ้าไม่มีผู้ดูแลระบบ -->
+          <div *ngIf="!hasAdminUsers()" class="col-span-full text-center text-neutral-500 py-8">
+            <p>ยังไม่มีผู้ดูแลระบบ</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="users.length === 0" class="text-center py-16 text-neutral-500">
+        <p>ยังไม่มีข้อมูลผู้ใช้</p>
+      </div>
+    </div>
+
+    <!-- User Transaction Modal -->
+    <div
+      *ngIf="isTransactionModalOpen"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+    >
+      <div class="bg-white rounded-3xl shadow-strong w-full max-w-2xl max-h-[80vh] overflow-y-auto">
+        <div class="p-6 border-b border-neutral-200 flex justify-between items-center">
+          <h3 class="text-xl font-display font-bold text-neutral-800">
+            ประวัติการทำธุรกรรมของ {{ selectedUser?.username }}
+          </h3>
+          <button
+            (click)="closeTransactionModal()"
+            class="text-neutral-400 hover:text-neutral-600 transition-colors"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="p-6">
+          <div *ngIf="userTransactions.length > 0; else noTrans">
+            <table class="w-full text-sm text-neutral-700 border-collapse">
+              <thead>
+                <tr class="bg-neutral-100 text-neutral-800 font-semibold">
+                  <th class="p-3 text-left">วันที่</th>
+                  <th class="p-3 text-left">ประเภท</th>
+                  <th class="p-3 text-left">รายละเอียด</th>
+                  <th class="p-3 text-right">จำนวนเงิน</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let t of userTransactions"
+                  class="border-b border-neutral-200 hover:bg-neutral-50"
+                >
+                  <td class="p-3">{{ formatDate(t.createdAt) }}</td>
+                  <td class="p-3">
+                    <span
+                      [ngClass]="{
+                        'text-green-600': t.type === 'topup',
+                        'text-red-600': t.type === 'purchase'
+                      }"
+                      >{{ t.type === 'topup' ? 'เติมเงิน' : 'ซื้อเกม' }}</span
+                    >
+                  </td>
+                  <td class="p-3">{{ t.description }}</td>
+                  <td
+                    class="p-3 text-right font-medium"
+                    [ngClass]="{
+                      'text-green-600': t.type === 'topup',
+                      'text-red-600': t.type === 'purchase'
+                    }"
+                  >
+                    {{ t.amount | number : '1.2-2' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <ng-template #noTrans>
+            <div class="text-center py-8 text-neutral-500">
+              <p>ไม่มีประวัติการทำธุรกรรม</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div
+      *ngIf="isLoading"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
+    >
+      <div class="bg-white rounded-3xl p-8 shadow-strong">
+        <div class="flex items-center space-x-4">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+          <span class="text-neutral-700 font-medium">กำลังโหลด...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

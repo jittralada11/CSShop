@@ -1,0 +1,181 @@
+<div class="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100">
+  <!-- Navigation Bar -->
+  <nav class="bg-white/95 backdrop-blur-md shadow-soft border-b border-neutral-200/50 sticky top-0 z-50"
+    *ngIf="isLoggedIn">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo Section -->
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-2 cursor-pointer group" (click)="navigateToShop()">
+            <div
+              class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center shadow-medium group-hover:shadow-strong transition-all duration-300">
+             <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+            </div>
+            <h1
+              class="text-2xl font-display font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent group-hover:from-primary-700 group-hover:to-secondary-700 transition-all duration-300">
+              CS-Shop
+            </h1>
+          </div>
+        </div>
+
+        <!-- User Navigation -->
+        <div class="hidden md:flex items-center space-x-1" *ngIf="!isAdmin">
+          <button (click)="navigateToShop()"
+            class="nav-button group relative px-4 py-2 rounded-xl text-neutral-700 hover:text-primary-600 font-medium transition-all duration-300 hover:bg-primary-50">
+            <svg class="w-4 h-4 inline-block mr-2 group-hover:scale-110 transition-transform duration-300" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            ร้านค้า
+          </button>
+          <button (click)="navigateToLibrary()"
+            class="nav-button group relative px-4 py-2 rounded-xl text-neutral-700 hover:text-primary-600 font-medium transition-all duration-300 hover:bg-primary-50">
+            <svg class="w-4 h-4 inline-block mr-2 group-hover:scale-110 transition-transform duration-300" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+              </path>
+            </svg>
+            คลังเกม
+          </button>
+          <button (click)="navigateToCart()"
+            class="nav-button group relative px-4 py-2 rounded-xl text-neutral-700 hover:text-primary-600 font-medium transition-all duration-300 hover:bg-primary-50">
+            <svg class="w-4 h-4 inline-block mr-2 group-hover:scale-110 transition-transform duration-300" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z">
+              </path>
+            </svg>
+            ตะกร้า
+          </button>
+          <button (click)="navigateToProfile()"
+            class="nav-button group relative px-4 py-2 rounded-xl text-neutral-700 hover:text-primary-600 font-medium transition-all duration-300 hover:bg-primary-50">
+            <svg class="w-4 h-4 inline-block mr-2 group-hover:scale-110 transition-transform duration-300" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            โปรไฟล์
+          </button>
+        </div>
+
+        <!-- Admin Navigation -->
+        <div class="hidden md:flex items-center space-x-1" *ngIf="isAdmin">
+          <button (click)="navigateToShop()"
+            class="nav-button group relative px-4 py-2 rounded-xl text-neutral-700 hover:text-primary-600 font-medium transition-all duration-300 hover:bg-primary-50">
+            <svg class="w-4 h-4 inline-block mr-2 group-hover:scale-110 transition-transform duration-300" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            ดูร้านค้า
+          </button>
+          <button (click)="navigateToAdmin()"
+            class="nav-button group relative px-4 py-2 rounded-xl text-neutral-700 hover:text-primary-600 font-medium transition-all duration-300 hover:bg-primary-50">
+            <svg class="w-4 h-4 inline-block mr-2 group-hover:scale-110 transition-transform duration-300" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+              </path>
+            </svg>
+            แดชบอร์ด
+          </button>
+
+        </div>
+
+        <!-- User Info & Actions -->
+        <div class="flex items-center space-x-3">
+          <!-- User Avatar & Info -->
+          <div
+            class="hidden sm:flex items-center space-x-3 px-3 py-2 rounded-xl bg-neutral-100/50 border border-neutral-200/50">
+            <div
+              class="w-8 h-8 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-full flex items-center justify-center shadow-soft">
+              <span class="text-white text-sm font-semibold">
+                {{ currentUser?.username?.charAt(0)?.toUpperCase() }}
+              </span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-neutral-800 text-sm font-medium">
+                {{ currentUser?.username }}
+              </span>
+              <span class="text-neutral-500 text-xs">
+                {{ isAdmin ? 'ผู้ดูแลระบบ' : 'สมาชิก' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Logout Button -->
+          <button (click)="logout()"
+            class="group relative px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white rounded-xl font-medium shadow-medium hover:shadow-strong transition-all duration-300 transform hover:scale-105">
+            <svg class="w-4 h-4 inline-block mr-2 group-hover:rotate-12 transition-transform duration-300" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+            ออกจากระบบ
+          </button>
+
+          <!-- Mobile Menu Button -->
+          <button (click)="toggleMobileMenu()"
+            class="md:hidden p-2 rounded-xl text-neutral-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" *ngIf="!isMobileMenuOpen">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" *ngIf="isMobileMenuOpen">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Menu -->
+      <div class="md:hidden border-t border-neutral-200/50 py-4 transition-all duration-300"
+        [class.hidden]="!isMobileMenuOpen" *ngIf="!isAdmin">
+        <div class="flex flex-col space-y-2">
+          <button (click)="navigateToShop()"
+            class="flex items-center px-4 py-3 rounded-xl text-neutral-700 hover:text-primary-600 hover:bg-primary-50 font-medium transition-all duration-300">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            ร้านค้า
+          </button>
+          <button (click)="navigateToLibrary()"
+            class="flex items-center px-4 py-3 rounded-xl text-neutral-700 hover:text-primary-600 hover:bg-primary-50 font-medium transition-all duration-300">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+              </path>
+            </svg>
+            คลังเกม
+          </button>
+          <button (click)="navigateToCart()"
+            class="flex items-center px-4 py-3 rounded-xl text-neutral-700 hover:text-primary-600 hover:bg-primary-50 font-medium transition-all duration-300">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01">
+              </path>
+            </svg>
+            ตะกร้า
+          </button>
+          <button (click)="navigateToProfile()"
+            class="flex items-center px-4 py-3 rounded-xl text-neutral-700 hover:text-primary-600 hover:bg-primary-50 font-medium transition-all duration-300">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            โปรไฟล์
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-1 animate-fade-in">
+    <router-outlet></router-outlet>
+  </main>
+</div>

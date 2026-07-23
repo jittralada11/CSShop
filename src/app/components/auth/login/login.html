@@ -1,0 +1,171 @@
+<div
+  class="min-h-screen bg-gradient-to-br from-primary-900 via-secondary-900 to-primary-800 flex items-center justify-center px-4 relative overflow-hidden">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-20">
+    <div class="w-full h-full"
+      style="background-image: url('data:image/svg+xml;utf8,<svg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><g fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;><g fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.03&quot;><circle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;2&quot;/></g></g></svg>');">
+    </div>
+  </div>
+
+  <div class="max-w-md w-full space-y-8 relative z-10">
+    <!-- Header -->
+    <div class="text-center animate-fade-in">
+      <div
+        class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl mb-6 shadow-strong">
+        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+      </div>
+      <h1 class="text-4xl font-display font-bold text-white mb-2 tracking-tight">CS-Shop</h1>
+      <h2 class="text-2xl font-semibold text-white/90">เข้าสู่ระบบ</h2>
+      <p class="text-white/70 mt-2 font-medium">ยินดีต้อนรับสู่ร้านเกมออนไลน์</p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 shadow-strong border border-white/20 animate-slide-up">
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="space-y-6">
+        <!-- Role Selection -->
+        <!-- <div class="space-y-3">
+          <label class="block text-sm font-semibold text-white/90 mb-3">ประเภทผู้ใช้</label>
+          <div class="grid grid-cols-2 gap-3">
+            <label
+              class="relative flex items-center justify-center p-4 bg-white/5 border rounded-xl cursor-pointer transition-all duration-200 hover:bg-white/10 group"
+              [class.border-primary-400]="loginData.role === 'user'"
+              [class.bg-primary-500/10]="loginData.role === 'user'" [class.border-white/20]="loginData.role !== 'user'"
+              [class.hover:border-primary-400/50]="loginData.role !== 'user'">
+              <input type="radio" name="role" value="user" [(ngModel)]="loginData.role" class="sr-only">
+              <div class="flex flex-col items-center space-y-2">
+                <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-200"
+                  [class.border-primary-400]="loginData.role === 'user'"
+                  [class.bg-primary-500/20]="loginData.role === 'user'"
+                  [class.border-white/30]="loginData.role !== 'user'">
+                  <div class="w-3 h-3 rounded-full bg-primary-400 transition-opacity duration-200"
+                    [class.opacity-100]="loginData.role === 'user'" [class.opacity-0]="loginData.role !== 'user'"></div>
+                </div>
+                <span class="font-medium text-sm transition-colors duration-200"
+                  [class.text-white]="loginData.role === 'user'"
+                  [class.text-white/80]="loginData.role !== 'user'">ผู้ใช้</span>
+              </div>
+            </label>
+            <label
+              class="relative flex items-center justify-center p-4 bg-white/5 border rounded-xl cursor-pointer transition-all duration-200 hover:bg-white/10 group"
+              [class.border-secondary-400]="loginData.role === 'admin'"
+              [class.bg-secondary-500/10]="loginData.role === 'admin'"
+              [class.border-white/20]="loginData.role !== 'admin'"
+              [class.hover:border-secondary-400/50]="loginData.role !== 'admin'">
+              <input type="radio" name="role" value="admin" [(ngModel)]="loginData.role" class="sr-only">
+              <div class="flex flex-col items-center space-y-2">
+                <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-200"
+                  [class.border-secondary-400]="loginData.role === 'admin'"
+                  [class.bg-secondary-500/20]="loginData.role === 'admin'"
+                  [class.border-white/30]="loginData.role !== 'admin'">
+                  <div class="w-3 h-3 rounded-full bg-secondary-400 transition-opacity duration-200"
+                    [class.opacity-100]="loginData.role === 'admin'" [class.opacity-0]="loginData.role !== 'admin'">
+                  </div>
+                </div>
+                <span class="font-medium text-sm transition-colors duration-200"
+                  [class.text-white]="loginData.role === 'admin'"
+                  [class.text-white/80]="loginData.role !== 'admin'">ผู้ดูแลระบบ</span>
+              </div>
+            </label>
+          </div>
+        </div> -->
+
+        <!-- Email -->
+        <div class="space-y-2">
+          <label for="email" class="block text-sm font-semibold text-white/90">อีเมล</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+              </svg>
+            </div>
+            <input type="email" id="email" name="email" [(ngModel)]="loginData.email" required
+              class="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all duration-200 backdrop-blur-sm"
+              placeholder="กรอกอีเมลของคุณ">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="space-y-2">
+          <label for="password" class="block text-sm font-semibold text-white/90">รหัสผ่าน</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <input type="password" id="password" name="password" [(ngModel)]="loginData.password" required
+              class="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all duration-200 backdrop-blur-sm"
+              placeholder="กรอกรหัสผ่านของคุณ">
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage"
+          class="bg-red-500/20 border border-red-400/50 text-red-100 px-4 py-3 rounded-xl backdrop-blur-sm animate-slide-down">
+          <div class="flex items-center space-x-2">
+            <svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            <span class="font-medium">{{ errorMessage }}</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="isLoading || !loginForm.form.valid"
+          class="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-semibold py-4 px-6 rounded-xl hover:from-primary-600 hover:to-secondary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-medium hover:shadow-strong transform hover:-translate-y-0.5 active:translate-y-0">
+          <span *ngIf="!isLoading" class="flex items-center justify-center space-x-2">
+            <span>เข้าสู่ระบบ</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
+          </span>
+          <span *ngIf="isLoading" class="flex items-center justify-center space-x-3">
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
+            </svg>
+            <span>กำลังเข้าสู่ระบบ...</span>
+          </span>
+        </button>
+
+        <!-- Register Link -->
+        <div class="text-center pt-2">
+          <p class="text-white/70">
+            ยังไม่มีบัญชี?
+            <button type="button" (click)="navigateToRegister()"
+              class="text-secondary-300 hover:text-secondary-200 font-semibold ml-1 transition-colors duration-200 underline decoration-secondary-300/50 hover:decoration-secondary-200 underline-offset-2">
+              สมัครสมาชิก
+            </button>
+          </p>
+        </div>
+
+        <!-- Demo Credentials -->
+        <!-- <div
+          class="bg-secondary-500/20 border border-secondary-400/50 text-secondary-100 px-4 py-4 rounded-xl text-sm backdrop-blur-sm">
+          <div class="flex items-start space-x-2">
+            <svg class="w-5 h-5 text-secondary-300 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                clip-rule="evenodd" />
+            </svg>
+            <div>
+              <p class="font-semibold mb-2">ข้อมูลทดสอบ:</p>
+              <p class="mb-1"><span class="font-medium">ผู้ใช้:</span> user@example.com (รหัสผ่าน: อะไรก็ได้)</p>
+              <p><span class="font-medium">ผู้ดูแล:</span> admin@CS-Shop.com (รหัสผ่าน: อะไรก็ได้)</p>
+            </div>
+          </div>
+        </div> -->
+      </form>
+    </div>
+  </div>
+</div>
