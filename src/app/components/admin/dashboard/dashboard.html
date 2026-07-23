@@ -326,15 +326,12 @@
           <!-- Game Category -->
           <div class="mb-6">
             <label class="block text-sm font-medium text-neutral-700 mb-2">หมวดหมู่</label>
-            <select
-              [(ngModel)]="gameForm.categoryId"
-              name="categoryId"
-              required
-              class="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
-            >
-              <option value="">เลือกหมวดหมู่</option>
-              <option *ngFor="let category of categories" [value]="category.id">
-                {{ category.name }}
+            <select name="categoryId" [(ngModel)]="gameForm.categoryId" required>
+              <option value="" disabled>-- กรุณาเลือกหมวดหมู่ --</option>
+
+              <!-- บังคับแปลง cat.id เป็น String ด้วย cat.id + '' -->
+              <option *ngFor="let cat of categories" [value]="cat.id + ''">
+                {{ cat.name }}
               </option>
             </select>
           </div>
@@ -356,32 +353,64 @@
           <div class="mb-6">
             <label class="block text-sm font-medium text-neutral-700 mb-2">รูปภาพเกม</label>
             <div class="relative">
-              <input type="file" #fileInput (change)="onImageFileSelected($event)" 
-                accept="image/*" class="hidden" id="imageUpload">
-              <div class="w-full border-2 border-dashed border-neutral-300 rounded-xl p-6 text-center hover:border-primary-500 transition-all duration-300 cursor-pointer"
-                (click)="fileInput.click()" 
+              <input
+                type="file"
+                #fileInput
+                (change)="onImageFileSelected($event)"
+                accept="image/*"
+                class="hidden"
+                id="imageUpload"
+              />
+              <div
+                class="w-full border-2 border-dashed border-neutral-300 rounded-xl p-6 text-center hover:border-primary-500 transition-all duration-300 cursor-pointer"
+                (click)="fileInput.click()"
                 [class.border-primary-500]="selectedImageFile"
-                [class.bg-primary-50]="selectedImageFile">
+                [class.bg-primary-50]="selectedImageFile"
+              >
                 <div *ngIf="!selectedImageFile && !imagePreview" class="py-4">
-                  <svg class="w-12 h-12 text-neutral-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                  <svg
+                    class="w-12 h-12 text-neutral-400 mx-auto mb-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    ></path>
                   </svg>
                   <p class="text-neutral-600 font-medium mb-2">คลิกเพื่อเลือกรูปภาพ</p>
                   <p class="text-neutral-500 text-sm">รองรับไฟล์ JPG, PNG, GIF (ขนาดไม่เกิน 5MB)</p>
                 </div>
                 <div *ngIf="selectedImageFile" class="py-2">
-                  <svg class="w-8 h-8 text-green-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  <svg
+                    class="w-8 h-8 text-green-500 mx-auto mb-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
                   </svg>
                   <p class="text-green-600 font-medium">{{ selectedImageFile.name }}</p>
-                  <p class="text-neutral-500 text-sm">{{ formatFileSize(selectedImageFile.size) }}</p>
+                  <p class="text-neutral-500 text-sm">
+                    {{ formatFileSize(selectedImageFile.size) }}
+                  </p>
                 </div>
               </div>
             </div>
             <div *ngIf="selectedImageFile" class="mt-2 flex justify-end">
-              <button type="button" (click)="removeSelectedImage()" 
-                class="text-red-500 hover:text-red-700 text-sm font-medium transition-colors duration-300">
+              <button
+                type="button"
+                (click)="removeSelectedImage()"
+                class="text-red-500 hover:text-red-700 text-sm font-medium transition-colors duration-300"
+              >
                 ลบรูปภาพ
               </button>
             </div>
@@ -391,13 +420,24 @@
           <div *ngIf="imagePreview" class="mb-6">
             <label class="block text-sm font-medium text-neutral-700 mb-2">ตัวอย่างรูปภาพ</label>
             <div class="w-full h-48 bg-neutral-100 rounded-xl overflow-hidden relative">
-              <img [src]="imagePreview" [alt]="gameForm.name || 'ตัวอย่างรูปภาพ'" 
-                class="w-full h-full object-cover">
+              <img
+                [src]="imagePreview"
+                [alt]="gameForm.name || 'ตัวอย่างรูปภาพ'"
+                class="w-full h-full object-cover"
+              />
               <div class="absolute top-2 right-2">
-                <button type="button" (click)="removeSelectedImage()" 
-                  class="bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-medium transition-all duration-300">
+                <button
+                  type="button"
+                  (click)="removeSelectedImage()"
+                  class="bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-medium transition-all duration-300"
+                >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
                   </svg>
                 </button>
               </div>
@@ -611,7 +651,7 @@
                     <span
                       [ngClass]="{
                         'text-green-600': t.type === 'topup',
-                        'text-red-600': t.type === 'purchase'
+                        'text-red-600': t.type === 'purchase',
                       }"
                       >{{ t.type === 'topup' ? 'เติมเงิน' : 'ซื้อเกม' }}</span
                     >
@@ -621,10 +661,10 @@
                     class="p-3 text-right font-medium"
                     [ngClass]="{
                       'text-green-600': t.type === 'topup',
-                      'text-red-600': t.type === 'purchase'
+                      'text-red-600': t.type === 'purchase',
                     }"
                   >
-                    {{ t.amount | number : '1.2-2' }}
+                    {{ t.amount | number: '1.2-2' }}
                   </td>
                 </tr>
               </tbody>

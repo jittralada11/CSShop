@@ -163,32 +163,27 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   editGame(game: Game): void {
-    this.selectedGame = game;
+  this.selectedGame = game;
 
-    // 1. ดึง ID ของ category แบบยืดหยุ่น (รองรับทั้งกรณีที่เป็น Object หรือเป็น String/Number ตรงๆ)
-    const rawCategoryId =
-      typeof game.category === 'object' && game.category !== null
-        ? game.category.id
-        : game.category;
+  // ดึง ID ออกมา ไม่ว่าจะส่งมาเป็น Object หรือ ID เปล่าๆ
+  const categoryIdFromGame = typeof game.category === 'object' && game.category !== null
+    ? game.category.id
+    : game.category;
 
-    // 2. หา category ในรายการหมวดหมู่ทั้งหมดเพื่อเปรียบเทียบ ID แบบยืดหยุ่น (เทียบด้วย == หรือ String)
-    const matchedCategory = this.categories.find((c) => String(c.id) === String(rawCategoryId));
+  this.gameForm = {
+    name: game.name || '',
+    price: game.price || 0,
+    // แปลงเป็น String เสมอ เพื่อให้ match กับ value ใน HTML
+    categoryId: categoryIdFromGame ? String(categoryIdFromGame) : '',
+    description: game.description || '',
+    image: game.image || '',
+  };
 
-    // 3. กำหนดค่าให้กับ gameForm โดยใช้ ID ที่ถูกต้องตรงกับที่มีใน this.categories
-    this.gameForm = {
-      name: game.name || '',
-      price: game.price || 0,
-      categoryId: matchedCategory ? String(matchedCategory.id) : '', // 👈 กำหนดค่า ID ที่หาเจอ
-      description: game.description || '',
-      image: game.image || '',
-    };
-
-    // Reset image upload state เมื่อเปิด modal แก้ไข
-    this.selectedImageFile = null;
-    this.imagePreview = game.image; // แสดงรูปภาพปัจจุบันของเกม
-    this.isEditingGame = true;
-    this.clearMessages();
-  }
+  this.selectedImageFile = null;
+  this.imagePreview = game.image;
+  this.isEditingGame = true;
+  this.clearMessages();
+}
 
   deleteGame(gameId: any): void {
     if (!confirm('คุณแน่ใจหรือไม่ที่จะลบเกมนี้?')) {
