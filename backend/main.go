@@ -163,15 +163,6 @@ func main() {
 	// run server
 	fmt.Printf("🚀 Server started at %s\n", url)
 	log.Fatal(http.ListenAndServe("0.0.0.0:8080", handler))
-
-	// Router Existing Routes...
-	mux.HandleFunc("/user", getUsers)
-
-	// ... (Routes อื่นๆ)
-
-	// ✅ เพิ่ม Route สำหรับแสดงชื่อตารางทั้งหมด
-	mux.HandleFunc("/tables", getTables)
-	mux.HandleFunc("/reset-password", resetPassword)
 }
 
 // ✅ ฟังก์ชันเปิด CORS
@@ -1536,82 +1527,4 @@ func ValidatePromotion(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
-}
-
-// handler ดึงรายชื่อตารางทั้งหมดในฐานข้อมูล
-func getTables(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	// รันคำสั่ง SHOW TABLES ดึงรายชื่อตารางทั้งหมด
-	rows, err := db.Query("SHOW TABLES")
-	if err != nil {
-		http.Error(w, "Query error: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-	defer rows.Close()
-
-	var tables []string
-	for rows.Next() {
-		var tableName string
-		if err := rows.Scan(&tableName); err != nil {
-			http.Error(w, "Scan error: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
-		tables = append(tables, tableName)
-	}
-
-	// ส่งผลลัพธ์กลับเป็น JSON Array
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(tables)
-}
-
-// handler สำหรับรีเซ็ตรหัสผ่านโดยตรง (ไม่ต้องกรอกรหัสผ่านเดิม)
-func resetPassword(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost && r.Method != http.MethodPut {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	var req struct {
-		UID         int    `json:"uid"`
-		NewPassword string `json:"new_password"`
-	}
-
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
-		return
-	}
-
-	if req.NewPassword == "" {
-		http.Error(w, "New password is required", http.StatusBadRequest)
-		return
-	}
-
-	// 1. เข้ารหัส (Hash) รหัสผ่านใหม่ก่อนบันทึกลง DB
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.NewPassword), bcrypt.DefaultCost)
-	if err != nil {
-		http.Error(w, "Error hashing password: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	// 2. อัปเดตรหัสผ่านใหม่ลงตาราง user
-	res, err := db.Exec("UPDATE user SET password = ? WHERE uid = ?", string(hashedPassword), req.UID)
-	if err != nil {
-		http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	rowsAffected, _ := res.RowsAffected()
-	if rowsAffected == 0 {
-		http.Error(w, "User not found", http.StatusNotFound)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]interface{}{
-		"message": fmt.Sprintf("Reset password for UID %d successfully", req.UID),
-	})
 }
