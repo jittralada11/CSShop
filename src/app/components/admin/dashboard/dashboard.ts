@@ -119,8 +119,19 @@ export class Dashboard implements OnInit, OnDestroy {
 
   loadCategories(): void {
     const s = this.gameService.getCategories().subscribe({
-      next: (categories) => (this.categories = categories),
-      error: (error) => console.error('Error loading categories:', error),
+      next: (categories: any) => {
+        console.log('📦 Categories จาก API:', categories);
+
+        // ป้องกันกรณี Backend ส่งมาเป็น { data: [...] } หรือ { categories: [...] }
+        if (Array.isArray(categories)) {
+          this.categories = categories;
+        } else if (categories && Array.isArray(categories.data)) {
+          this.categories = categories.data;
+        } else {
+          this.categories = [];
+        }
+      },
+      error: (error) => console.error('❌ Error loading categories:', error),
     });
     this.subs.push(s);
   }
@@ -163,9 +174,13 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   editGame(game: Game): void {
+  // บังคับเช็ก/โหลดหมวดหมู่ใหม่ ถ้ามันว่างอยู่
+  if (!this.categories || this.categories.length === 0) {
+    this.loadCategories();
+  }
+
   this.selectedGame = game;
 
-  // ดึง ID ออกมา ไม่ว่าจะส่งมาเป็น Object หรือ ID เปล่าๆ
   const categoryIdFromGame = typeof game.category === 'object' && game.category !== null
     ? game.category.id
     : game.category;
@@ -173,7 +188,6 @@ export class Dashboard implements OnInit, OnDestroy {
   this.gameForm = {
     name: game.name || '',
     price: game.price || 0,
-    // แปลงเป็น String เสมอ เพื่อให้ match กับ value ใน HTML
     categoryId: categoryIdFromGame ? String(categoryIdFromGame) : '',
     description: game.description || '',
     image: game.image || '',
