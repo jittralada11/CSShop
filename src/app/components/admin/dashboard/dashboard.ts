@@ -15,7 +15,7 @@ import { Transaction } from '../../../models/transaction.model';
 type GameForm = {
   name: string;
   price: number;
-  categoryId: string;
+  categoryId: string; 
   description: string;
   image: string;
 };

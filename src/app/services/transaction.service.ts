@@ -97,7 +97,7 @@ export class TransactionService {
   }
 
   // ✅ บันทึกการซื้อเกม (ฝั่ง backend ต้องมี endpoint นี้ในอนาคต)
-  recordPurchase(uid: number, amount: number, description: string): Observable<any> {
+  recordPurchase(uid: number, amount: number, description: string, p0?: string): Observable<any> {
     const payload = { uid, amount, description };
     return this.http.post(`${this.baseUrl}/wallet/purchase`, payload);
   }
